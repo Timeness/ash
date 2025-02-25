@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>R E D I R C T</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -10,9 +11,15 @@
     <div id="app"></div>
     <script>
         Vue.createApp({
-            mounted() {
-                const redirectData = { web: "https://youtube.com" };
-                window.location.href = redirectData.web;
+            async mounted() {
+                try {
+                    const response = await fetch('webs.json');
+                    const data = await response.json();
+                    const redirectUrl = { web: data[0] };
+                    window.location.href = redirectUrl.web;
+                } catch (error) {
+                    console.error('JSON ERROR :', error);
+                }
             }
         }).mount("#app");
     </script>
